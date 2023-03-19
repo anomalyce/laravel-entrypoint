@@ -176,7 +176,7 @@ class Entrypoint
    */
   public function console(?string $httpKernel = null, ?string $consoleKernel = null, ?string $exceptionHandler = null): int
   {
-    $app = $this->createApplication();
+    $app = $this->createApplication($httpKernel, $consoleKernel, $exceptionHandler);
 
     $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
 
