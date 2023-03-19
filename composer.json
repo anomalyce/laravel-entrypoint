@@ -1,0 +1,12 @@
+{
+  "name": "anomalyce/laravel-entrypoint",
+  "type": "library",
+  "description": "Customise your Laravel entrypoint structure.",
+  "keywords": ["framework", "laravel", "entrypoint", "structure"],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Anomalyce\\LaravelEntrypoint\\": "src/"
+    }
+  }
+}
