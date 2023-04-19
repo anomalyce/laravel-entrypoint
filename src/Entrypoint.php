@@ -148,15 +148,11 @@ class Entrypoint
   /**
    * Serve the application.
    *
-   * @param  string|null  $httpKernel  null
-   * @param  string|null  $consoleKernel  null
-   * @param  string|null  $exceptionHandler  null
+   * @param  \Illuminate\Foundation\Application  $app
    * @return void
    */
-  public function serve(?string $httpKernel = null, ?string $consoleKernel = null, ?string $exceptionHandler = null): void
+  public function serve(Laravel $app): void
   {
-    $app = $this->createApplication($httpKernel, $consoleKernel, $exceptionHandler);
-
     $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
 
     $response = $kernel->handle(
@@ -169,15 +165,11 @@ class Entrypoint
   /**
    * Serve the application for CLI usage.
    *
-   * @param  string|null  $httpKernel  null
-   * @param  string|null  $consoleKernel  null
-   * @param  string|null  $exceptionHandler  null
+   * @param  \Illuminate\Foundation\Application  $app
    * @return integer
    */
-  public function console(?string $httpKernel = null, ?string $consoleKernel = null, ?string $exceptionHandler = null): int
+  public function console(Laravel $app): int
   {
-    $app = $this->createApplication($httpKernel, $consoleKernel, $exceptionHandler);
-
     $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
 
     $status = $kernel->handle(
@@ -219,6 +211,11 @@ class Entrypoint
       \Illuminate\Contracts\Debug\ExceptionHandler::class,
       $exceptionHandler ?? \App\Exceptions\Handler::class
     );
+
+    $entrypoint = $this;
+
+    Laravel::macro('serve', fn () => $entrypoint->serve($this));
+    Laravel::macro('console', fn () => $entrypoint->console($this));
 
     return $app;
   }

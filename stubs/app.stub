@@ -1,0 +1,16 @@
+<?php
+
+$app = new Anomalyce\LaravelEntrypoint\Entrypoint(__DIR__.'/../');
+
+$app->loadConfigurationFrom('app/config');
+$app->loadLocaleFrom('app/locale');
+$app->loadRoutesFrom('app/routes');
+$app->loadStorageFrom('storage');
+$app->loadDatabaseFrom('storage/database');
+$app->serveFrom('public');
+
+return $app->createApplication(
+  httpKernel: \Prinode\Peregrine\Foundation\Http\Kernel::class,
+  consoleKernel: \Prinode\Peregrine\Foundation\Console\Kernel::class,
+  exceptionHandler: \Prinode\Peregrine\Foundation\Exceptions\Handler::class,
+);
